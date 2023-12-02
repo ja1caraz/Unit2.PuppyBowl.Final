@@ -1,10 +1,12 @@
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
-
+const state = {
+    players: []     //Created State
+}
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
-const cohortName = 'YOUR COHORT NAME HERE';
+const cohortName = '2310-FSA-ET-WEB-PT-SF';
 // Use the APIURL variable for fetch requests
-const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/`;
+const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
 
 /**
  * It fetches all players from the API and returns them
@@ -12,11 +14,43 @@ const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/`;
  */
 const fetchAllPlayers = async () => {
     try {
+        const response = await fetch(APIURL);
+        const results = await response.json();
+        // results.map()
+        results.data.players.forEach((x) => state.players.push(x));
+        return results.data.players;
 
     } catch (err) {
         console.error('Uh oh, trouble fetching players!', err);
     }
 };
+
+//Works off the index of the state.players array up top
+const createPlayerCard = (playerIndex) => {
+    const player = state.players[playerIndex]; //get a player by index
+    const section = document.createElement("section");
+    section.classList.add("card");
+    section.style.display = "inline-block";
+    state.players.map((key) => {
+
+        //insert HTML
+        section.innerHTML= `
+            <details>
+              <summary>${key.name}</summary>
+              ${key.breed}
+              ${key.status}
+              <img src="${key.imageUrl}">
+              ${key.createdAt}
+              ${key.updatedAt}
+              ${key.teamID}
+              ${key.cohortID}
+            </details>`;
+    });
+
+    //Add to All Players list
+    const divPlayerContainer = document.getElementById("all-players-container");
+    divPlayerContainer.appendChild(section);
+}
 
 const fetchSinglePlayer = async (playerId) => {
     try {
@@ -65,9 +99,11 @@ const removePlayer = async (playerId) => {
  * @param playerList - an array of player objects
  * @returns the playerContainerHTML variable.
  */
-const renderAllPlayers = (playerList) => {
+const renderAllPlayers = async (playerList) => {
     try {
-        
+        await fetchAllPlayers();
+        createPlayerCard(1); //Test with one entry for the create card
+
     } catch (err) {
         console.error('Uh oh, trouble rendering players!', err);
     }
