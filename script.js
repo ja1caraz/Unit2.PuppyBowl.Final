@@ -32,18 +32,26 @@ const createPlayerCard = (playerIndex) => {
     section.classList.add("card");
     section.style.display = "inline-block";
     state.players.map((key) => {
+        const name = key.name ? key.name: '';
+        const breed = key.breed ? key.breed: '';
+        const status = key.status ? key.status: '';
+        const imgUrl = key.imageUrl ? key.imageUrl: '';
+        const createDate = key.createdAt ? key.createdAt: '';
+        const updateDate = key.updatedAt ? key.updatedAt: '';
+        const teamId = key.teamId ? key.teamId: '';
+        const cohortId = key.cohortId ? key.cohortId: '';
 
         //insert HTML
         section.innerHTML= `
             <details>
-              <summary>${key.name}</summary>
-              ${key.breed}
-              ${key.status}
-              <img src="${key.imageUrl}">
-              ${key.createdAt}
-              ${key.updatedAt}
-              ${key.teamID}
-              ${key.cohortID}
+              <summary>${name}</summary>
+              <span><img src="${imgUrl}"></span>
+              <span>Breed: ${breed}</span>
+              <span>Status: ${status}</span>
+              <span>Created on: ${createDate}</span>
+              <span>Updated on: ${updateDate}</span>
+              <span>Team ID: ${teamId}</span>
+              <span>Cohort ID: ${cohortId}</span>
             </details>`;
     });
 
