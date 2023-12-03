@@ -1,24 +1,42 @@
-//Test
-const playerContainer = document.getElementById('all-players-container');
-const newPlayerFormContainer = document.getElementById('new-player-form');
-
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
-const cohortName = 'YOUR COHORT NAME HERE';
+const cohortName = '2310-FSA-ET-WEB-PT-SF';
+
 // Use the APIURL variable for fetch requests
-const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/`;
+const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
+
+const state = {
+    players: [],
+};
+
+//API Documentation https://fsa-puppy-bowl.herokuapp.com/api/
+
+//For selecting the form
+const newPlayerForm = document.getElementById('new-player-form');
+
+//For selecting the container for all players.
+const playerContainer = document.getElementById('all-players-container');
+
+const playerList = document.querySelector('#players');
 
 /**
  * It fetches all players from the API and returns them
  * @returns An array of objects.
  */
+
+//Grabs all players from API
 const fetchAllPlayers = async () => {
     try {
+        const response = await fetch(APIURL);
+        const json = await response.json();
+        state.players = json.data;
+        return state.players;
 
     } catch (err) {
         console.error('Uh oh, trouble fetching players!', err);
     }
 };
 
+//Pass player id to function movie from puppies unselected to puppies selected
 const fetchSinglePlayer = async (playerId) => {
     try {
 
@@ -27,6 +45,7 @@ const fetchSinglePlayer = async (playerId) => {
     }
 };
 
+//Call up in addevent listener for Button Add New Player to API
 const addNewPlayer = async (playerObj) => {
     try {
 
@@ -35,6 +54,7 @@ const addNewPlayer = async (playerObj) => {
     }
 };
 
+//Pass Id to function, delete player from API.
 const removePlayer = async (playerId) => {
     try {
 
@@ -66,9 +86,31 @@ const removePlayer = async (playerId) => {
  * @param playerList - an array of player objects
  * @returns the playerContainerHTML variable.
  */
-const renderAllPlayers = (playerList) => {
+//const renderAllPlayers = (playerList) => {
+
+const renderAllPlayers = (allPlayers) => {
     try {
-        
+
+        const playersArray = allPlayers.players;
+
+        if (!playersArray.length) {
+            playerList.innerHTML = "<li>No Players</li>"
+            return;
+        }
+
+        const playerCards = playersArray.map((player) => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+            <h2>${player.name}</h2>
+            <p>${player.breed}</p>
+            <img src="${player.imageUrl}">
+            <p>${player.teamId}</p>
+            `;
+            playerList.appendChild(li);
+        });
+
+        //playerList.appendChild(...playerCards);
+
     } catch (err) {
         console.error('Uh oh, trouble rendering players!', err);
     }
@@ -79,9 +121,14 @@ const renderAllPlayers = (playerList) => {
  * It renders a form to the DOM, and when the form is submitted, it adds a new player to the database,
  * fetches all players from the database, and renders them to the DOM.
  */
+//Render from inside of the form tag
 const renderNewPlayerForm = () => {
     try {
-        
+
+        if (!state.players.length) {
+
+        }
+
     } catch (err) {
         console.error('Uh oh, trouble rendering the new player form!', err);
     }
