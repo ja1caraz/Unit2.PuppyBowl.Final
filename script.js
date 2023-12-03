@@ -104,7 +104,6 @@ const renderAllPlayers = (allPlayers) => {
             <h2>${player.name}</h2>
             <p>${player.breed}</p>
             <img src="${player.imageUrl}">
-            <p>${player.teamId}</p>
             `;
             playerList.appendChild(li);
         });
@@ -121,13 +120,28 @@ const renderAllPlayers = (allPlayers) => {
  * It renders a form to the DOM, and when the form is submitted, it adds a new player to the database,
  * fetches all players from the database, and renders them to the DOM.
  */
-//Render from inside of the form tag
 const renderNewPlayerForm = () => {
     try {
 
         if (!state.players.length) {
 
         }
+
+        let form = document.createElement('form');
+        form.id = 'playerForm';
+        newPlayerForm.appendChild(form);
+
+        let nameLabel = document.createElement('label');
+        nameLabel.htmlFor = 'name';
+        nameLabel.textContent = 'Name: ';
+        nameLabel.name = 'name';
+        form.appendChild(nameLabel);
+
+        let nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.id = 'name';
+        nameInput.name = 'name';
+        form.appendChild(nameInput);
 
     } catch (err) {
         console.error('Uh oh, trouble rendering the new player form!', err);

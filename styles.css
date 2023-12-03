@@ -3,3 +3,27 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+ul {
+  display: flex;
+  flex-flow: row wrap;
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  flex: 1 1 300px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+li img {
+  width: 100%;
+  max-width: 300px;
+  max-height: 100%;
+}
+
+
