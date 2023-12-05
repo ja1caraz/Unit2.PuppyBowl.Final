@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="3992e9c8-49a3-4294-9aac-797a9b7d2f91" name="Changes" comment="" />
+=======
+    <list default="true" id="a8b1b148-78f1-4b8d-b06f-a2bb15becc5c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles.css" afterDir="false" />
+    </list>
+>>>>>>> origin/cake
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,9 +24,16 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
+<<<<<<< HEAD
   "associatedIndex": 4
 }]]></component>
   <component name="ProjectId" id="2YvCU33OnLRteJoDaQji3uWyS2h" />
+=======
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2YxGN7X5Ienvi81ow6seshCTZOl" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+>>>>>>> origin/cake
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,24 +43,40 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+<<<<<<< HEAD
     "ignore.virus.scanning.warn.message": "true",
+=======
+    "git-widget-placeholder": "cake",
+>>>>>>> origin/cake
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+<<<<<<< HEAD
     "nodejs_package_manager_path": "npm",
+=======
+>>>>>>> origin/cake
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="3992e9c8-49a3-4294-9aac-797a9b7d2f91" name="Changes" comment="" />
       <created>1701396678949</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1701396678949</updated>
       <workItem from="1701396680044" duration="3272000" />
+=======
+      <changelist id="a8b1b148-78f1-4b8d-b06f-a2bb15becc5c" name="Changes" comment="" />
+      <created>1701459774577</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1701459774577</updated>
+      <workItem from="1701459777674" duration="8548000" />
+>>>>>>> origin/cake
     </task>
     <servers />
   </component>
