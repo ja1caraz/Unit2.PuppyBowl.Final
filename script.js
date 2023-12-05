@@ -156,6 +156,7 @@ const renderAllPlayers = (allPlayers) => {
     try {
 
         //const playersArray = allPlayers.players;
+        //test
 
         //Add a filter attribute and only display them their status is on field?
         const playerCards = allPlayers.map((player) => {
