@@ -94,12 +94,13 @@ const addNewPlayer = async (playerObj) => {
 };
 
 const renderSinglePlayer = (player) => {
-    console.log(player, "Single Player");
     const li = document.createElement("li");
     li.innerHTML = `
     <h2>${player.name}</h2>
+    <details>
     <p>${player.breed}</p>
     <img src="${player.imageUrl}">
+    </details>
     `;
     playerList.appendChild(li);
 }
@@ -142,6 +143,14 @@ const removePlayer = async (playerId) => {
  * @returns the playerContainerHTML variable.
  */
 //const renderAllPlayers = (playerList) => {
+
+// const createPlayerCard (player) {
+//     return `
+//     <h2>${player.name}</h2>
+//     <p>${player.breed}</p>
+//     <img src="${player.imageUrl}">
+//     `;
+// }
 
 const renderAllPlayers = (allPlayers) => {
     try {
