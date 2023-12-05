@@ -66,34 +66,12 @@ const fetchSinglePlayer = async (playerId) => {
 };
 
 //Call up in addevent listener for Button Add New Player to API
-// const addNewPlayer = async (playerObj) => {
-
-
-//     try {
-
-
-//         const response = await fetch(APIURL, {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify(playerObj),
-//         });
-
-//         if (!response.ok) {
-//             throw new Error("Failed to add Player")
-//         }
-
-//         const addedPlayer = await response.json();
-//         console.log(addedPlayer.data, "New Player");
-//         state.players.push(addedPlayer.data.newPlayer);
-//         renderSinglePlayer(addedPlayer.data.newPlayer);
-//         renderAllPlayers();
-
-//     } catch (err) {
-//         console.error('Oops, something went wrong with adding that player!', err);
-//     }
-// };
 const addNewPlayer = async (playerObj) => {
+
+
     try {
+
+
         const response = await fetch(APIURL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -101,30 +79,28 @@ const addNewPlayer = async (playerObj) => {
         });
 
         if (!response.ok) {
-            throw new Error("Failed to add Player");
+            throw new Error("Failed to add Player")
         }
 
         const addedPlayer = await response.json();
         console.log(addedPlayer.data, "New Player");
         state.players.push(addedPlayer.data.newPlayer);
         renderSinglePlayer(addedPlayer.data.newPlayer);
-        // Render all players again after adding the new player
-        const updatedPlayers = await fetchAllPlayers();
-        renderAllPlayers(updatedPlayers);
+        renderAllPlayers();
+
     } catch (err) {
         console.error('Oops, something went wrong with adding that player!', err);
     }
 };
 
-
-
 const renderSinglePlayer = (player) => {
-    console.log(player, "Single Player");
     const li = document.createElement("li");
     li.innerHTML = `
     <h2>${player.name}</h2>
+    <details>
     <p>${player.breed}</p>
     <img src="${player.imageUrl}">
+    </details>
     `;
     playerList.appendChild(li);
 }
@@ -167,6 +143,14 @@ const removePlayer = async (playerId) => {
  * @returns the playerContainerHTML variable.
  */
 //const renderAllPlayers = (playerList) => {
+
+// const createPlayerCard (player) {
+//     return `
+//     <h2>${player.name}</h2>
+//     <p>${player.breed}</p>
+//     <img src="${player.imageUrl}">
+//     `;
+// }
 
 const renderAllPlayers = (allPlayers) => {
     try {
@@ -272,7 +256,7 @@ const renderNewPlayerForm = async () => {
         submitButton.textContent = 'Submit';
         form.appendChild(submitButton);
 
-        form.addEventListener('submit', async function (event) {
+        form.addEventListener('submit', function (event) {
             event.preventDefault();
 
             const nameInput = document.getElementById('name');
@@ -311,7 +295,7 @@ const renderNewPlayerForm = async () => {
                 teamId: Number(teamIdInput.value)
             };
 
-            await addNewPlayer(playerObject);
+            addNewPlayer(playerObject);
             //init();
 
 
