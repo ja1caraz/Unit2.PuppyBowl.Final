@@ -26,12 +26,12 @@ const fetchAllPlayers = async () => {
 };
 
 //Works off the index of the state.players array up top
-const createPlayerCard = (playerIndex) => {
-    const player = state.players[playerIndex]; //get a player by index
-    const section = document.createElement("section");
-    section.classList.add("card");
-    section.style.display = "inline-block";
+const createPlayerCard = () => {
+    const divPlayerContainer = document.getElementById("all-players-container");
+
     state.players.map((key) => {
+        const section = document.createElement("section");
+        section.classList.add("card");
         const name = key.name ? key.name: '';
         const breed = key.breed ? key.breed: '';
         const status = key.status ? key.status: '';
@@ -43,9 +43,9 @@ const createPlayerCard = (playerIndex) => {
 
         //insert HTML
         section.innerHTML= `
+            <span><img src="${imgUrl}"></span>
             <details>
               <summary>${name}</summary>
-              <span><img src="${imgUrl}"></span>
               <span>Breed: ${breed}</span>
               <span>Status: ${status}</span>
               <span>Created on: ${createDate}</span>
@@ -53,11 +53,10 @@ const createPlayerCard = (playerIndex) => {
               <span>Team ID: ${teamId}</span>
               <span>Cohort ID: ${cohortId}</span>
             </details>`;
-    });
 
-    //Add to All Players list
-    const divPlayerContainer = document.getElementById("all-players-container");
-    divPlayerContainer.appendChild(section);
+        //Add to All Players list
+        divPlayerContainer.appendChild(section);
+    });
 }
 
 const fetchSinglePlayer = async (playerId) => {
@@ -110,7 +109,7 @@ const removePlayer = async (playerId) => {
 const renderAllPlayers = async (playerList) => {
     try {
         await fetchAllPlayers();
-        createPlayerCard(1); //Test with one entry for the create card
+        createPlayerCard(); //Test with one entry for the create card
 
     } catch (err) {
         console.error('Uh oh, trouble rendering players!', err);
