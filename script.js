@@ -94,15 +94,15 @@ const addNewPlayer = async (playerObj) => {
 };
 
 const renderSinglePlayer = (player) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-    <h2>${player.name}</h2>
-    <details>
-    <p>${player.breed}</p>
-    <img src="${player.imageUrl}">
-    </details>
-    `;
-    playerList.appendChild(li);
+
+    const playerCardHTML = createPlayerCard(player);
+    const playerCardElement = document.createElement("li");
+    playerCardElement.innerHTML = playerCardHTML;
+    playerList.appendChild(playerCardElement);
+
+    // const li = document.createElement("li");
+    // li.innerHTML = createPlayerCard(player);
+    // playerList.appendChild(li);
 }
 
 //Pass Id to function, delete player from API.
@@ -144,13 +144,35 @@ const removePlayer = async (playerId) => {
  */
 //const renderAllPlayers = (playerList) => {
 
-// const createPlayerCard (player) {
-//     return `
-//     <h2>${player.name}</h2>
-//     <p>${player.breed}</p>
-//     <img src="${player.imageUrl}">
-//     `;
-// }
+const createPlayerCard = (player) => {
+
+    const createdPlayer = player.createdAt;
+    const updatedPlayer = player.updatedAt;
+
+     return `
+     <h2>${player.name}</h2>
+     <details>
+     <p>Created: ${simpleDate(createdPlayer)}</p>
+     <p>Updated ${simpleDate(updatedPlayer)}</p>
+     <p>Breed: ${player.breed}</p>
+     <img src="${player.imageUrl}">
+     </details>
+     `;
+ }
+
+ const simpleDate = (dateString) => {
+    let date = new Date(dateString);
+
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDay();
+
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+
+    return `${year}-${month}-${day}`;
+
+ }
 
 const renderAllPlayers = (allPlayers) => {
     try {
@@ -160,14 +182,9 @@ const renderAllPlayers = (allPlayers) => {
 
         //Add a filter attribute and only display them their status is on field?
         const playerCards = allPlayers.map((player) => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-            <h2>${player.name}</h2>
-            <details>
-            <p>${player.breed}</p>
-            <img src="${player.imageUrl}">
-            </details>
-            `;
+            // const li = document.createElement("li");
+            // li.innerHTML = createPlayerCard(player);
+            renderSinglePlayer(player);
 
             //Something like this for delete button
             // const deleteButton = document.createElement("button");
@@ -180,11 +197,11 @@ const renderAllPlayers = (allPlayers) => {
             // });
 
             //li.appendChild(deleteButton);
-            return li;
+            //return li;
             //playerList.appendChild(li);
         });
 
-        playerList.append(...playerCards);
+        //playerList.append(...playerCards);
 
     } catch (err) {
         console.error('Uh oh, trouble rendering players!', err);
