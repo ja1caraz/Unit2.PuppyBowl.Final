@@ -96,11 +96,24 @@ const addNewPlayer = async (playerObj) => {
 const renderSinglePlayer = (player) => {
     const li = document.createElement("li");
     li.innerHTML = `
-    <h2>${player.name}</h2>
-    <details>
-    <p>${player.breed}</p>
-    <img src="${player.imageUrl}">
-    </details>
+    <div>
+      <span id="span-player">
+        <h2>${player.name}</h2>
+        <img src="${player.imageUrl}">
+      </span>
+      <span id="span-details">
+        <details>
+          <h4>Breed: </h4>
+          <p>${player.breed}</p>
+          <h4>Status: </h4>
+          <p>${player.status}</p>
+          <h4>Created: </h4>
+          <p>${player.createdAt}</p>
+          <h4>Updated: </h4>
+          <p>${player.updatedAt}</p>
+        </details>
+      </span>
+    </div>
     `;
     playerList.appendChild(li);
 }
@@ -158,15 +171,8 @@ const renderAllPlayers = (allPlayers) => {
         //const playersArray = allPlayers.players;
 
         //Add a filter attribute and only display them their status is on field?
-        const playerCards = allPlayers.map((player) => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-            <h2>${player.name}</h2>
-            <details>
-            <p>${player.breed}</p>
-            <img src="${player.imageUrl}">
-            </details>
-            `;
+        const playerCards = allPlayers.forEach((player) => {
+            renderSinglePlayer(player)
 
             //Something like this for delete button
             // const deleteButton = document.createElement("button");
@@ -179,7 +185,7 @@ const renderAllPlayers = (allPlayers) => {
             // });
 
             //li.appendChild(deleteButton);
-            return li;
+            // return li;
             //playerList.appendChild(li);
         });
 
