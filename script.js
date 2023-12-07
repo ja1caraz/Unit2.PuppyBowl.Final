@@ -94,15 +94,29 @@ const addNewPlayer = async (playerObj) => {
 };
 
 const renderSinglePlayer = (player) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-    <h2>${player.name}</h2>
-    <details>
-    <p>${player.breed}</p>
-    <img src="${player.imageUrl}">
-    </details>
-    `;
-    playerList.appendChild(li);
+
+    //Declare inner HTML variable as function for HTML
+    //Create Li
+    //Place Inner HTML in Cards
+    //Append card to player card elements.
+    const playerCardHTML = createPlayerCard(player);
+    const playerCardElement = document.createElement("li");
+    playerCardElement.innerHTML = playerCardHTML;
+    playerCardElement.id = `player-${player.id}`;
+
+    //Something like this for delete button
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete Event";
+    deleteButton.setAttribute("data-event-id", player.id);
+
+    deleteButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        removePlayer(player.id);
+    });
+
+    playerCardElement.appendChild(deleteButton);
+    playerList.appendChild(playerCardElement);
+
 }
 
 //Pass Id to function, delete player from API.
@@ -110,15 +124,26 @@ const removePlayer = async (playerId) => {
     try {
 
         //Probably something like this
-        // const response = await fetch(`${APIURL}/${playerId}`, {
-        //     method: 'DELETE',
-        // });
+        const response = await fetch(`${APIURL}/${playerId}`, {
+            method: 'DELETE',
+        });
+
+        // Check if the delete operation was successful
+        if (response.ok) {
+            const playerElement = document.getElementById(`player-${playerId}`);
+            if (playerElement) {
+                playerElement.remove(); // Remove only the targeted element
+            }
+
+            // Update state
+            state.players = state.players.filter(player => player.id !== playerId);
+        } else {
+            // Handle error response
+            throw new Error(`Failed to delete player with ID: ${playerId}`);
+        }
 
     } catch (err) {
-        console.error(
-            `Whoops, trouble removing player #${playerId} from the roster!`,
-            err
-        );
+        console.error(`Whoops, trouble removing player #${playerId} from the roster!`, err);
     }
 };
 
@@ -142,48 +167,46 @@ const removePlayer = async (playerId) => {
  * @param playerList - an array of player objects
  * @returns the playerContainerHTML variable.
  */
-//const renderAllPlayers = (playerList) => {
 
-// const createPlayerCard (player) {
-//     return `
-//     <h2>${player.name}</h2>
-//     <p>${player.breed}</p>
-//     <img src="${player.imageUrl}">
-//     `;
-// }
+const createPlayerCard = (player) => {
+
+    const createdPlayer = player.createdAt;
+    const updatedPlayer = player.updatedAt;
+
+    return `
+     <h2>${player.name}</h2>
+     <details>
+     <p>Created: ${simpleDate(createdPlayer)}</p>
+     <p>Updated ${simpleDate(updatedPlayer)}</p>
+     <p>Breed: ${player.breed}</p>
+     <p>Status: ${player.status}</p>
+     <img src="${player.imageUrl}">
+     </details>
+     `;
+}
+
+const simpleDate = (dateString) => {
+    let date = new Date(dateString);
+
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDay();
+
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+
+    return `${year}-${month}-${day}`;
+
+}
 
 const renderAllPlayers = (allPlayers) => {
     try {
-
-        //const playersArray = allPlayers.players;
+        //test
 
         //Add a filter attribute and only display them their status is on field?
         const playerCards = allPlayers.map((player) => {
-            const li = document.createElement("li");
-            li.innerHTML = `
-            <h2>${player.name}</h2>
-            <details>
-            <p>${player.breed}</p>
-            <img src="${player.imageUrl}">
-            </details>
-            `;
-
-            //Something like this for delete button
-            // const deleteButton = document.createElement("button");
-            // deleteButton.textContent = "Delete Event";
-            // deleteButton.setAttribute("data-event-id", event.id);
-
-            // deleteButton.addEventListener("click", (e) => {
-            //   e.preventDefault();
-            //   deletePlayer(player.id);
-            // });
-
-            //li.appendChild(deleteButton);
-            return li;
-            //playerList.appendChild(li);
+            renderSinglePlayer(player);
         });
-
-        playerList.append(...playerCards);
 
     } catch (err) {
         console.error('Uh oh, trouble rendering players!', err);
@@ -227,6 +250,26 @@ const renderNewPlayerForm = async () => {
         breedInput.name = 'breed';
         form.appendChild(breedInput);
 
+        let statusLabel = document.createElement('label');
+        statusLabel.htmlFor = 'status';
+        statusLabel.textContent = 'Status:';
+        form.appendChild(statusLabel);
+
+        let statusSelect = document.createElement('select');
+        statusSelect.id = 'status';
+        statusSelect.name = 'status';
+        form.appendChild(statusSelect);
+
+        const statusOptions = ['field', 'bench'];
+
+        statusOptions.forEach((option) => {
+            let statusOption = document.createElement('option');
+            statusOption.value = option;
+            statusOption.textContent = option.charAt(0).toUpperCase() + option.slice(1); // Capitalize first letter
+            statusSelect.appendChild(statusOption);
+        });
+
+
         let imageUrlLabel = document.createElement('label');
         imageUrlLabel.htmlFor = 'imageUrl';
         imageUrlLabel.textContent = 'Image Url: ';
@@ -239,18 +282,6 @@ const renderNewPlayerForm = async () => {
         imageUrlInput.name = 'imageUrl';
         form.appendChild(imageUrlInput);
 
-        let teamIdLabel = document.createElement('label');
-        teamIdLabel.htmlFor = 'teamId';
-        teamIdLabel.textContent = 'Team ID: ';
-        teamIdLabel.name = 'teamId';
-        form.appendChild(teamIdLabel);
-
-        let teamIdInput = document.createElement('input');
-        teamIdInput.type = 'number';
-        teamIdInput.id = 'teamId';
-        teamIdInput.name = 'teamId';
-        form.appendChild(teamIdInput);
-
         let submitButton = document.createElement('button');
         submitButton.type = 'submit';
         submitButton.textContent = 'Submit';
@@ -262,7 +293,8 @@ const renderNewPlayerForm = async () => {
             const nameInput = document.getElementById('name');
             const breedInput = document.getElementById('breed');
             const imageUrlInput = document.getElementById('imageUrl');
-            const teamIdInput = document.getElementById('teamId');
+            const statusInput = document.getElementById('status');
+            const selectedStatus = statusInput.value;
 
             // Validate Name
             if (!nameInput.value.trim()) {
@@ -276,28 +308,28 @@ const renderNewPlayerForm = async () => {
                 return;
             }
 
+             // Validate Status
+             if (!statusOptions.includes(selectedStatus)) {
+                alert('Please select a valid status.');
+                return;
+            }
+
+
             // Validate Image URL (basic validation for URL format)
             if (!imageUrlInput.value.trim() || !imageUrlInput.value.startsWith('http')) {
                 alert('Please enter a valid image URL.');
                 return;
             }
 
-            // Validate Team ID (basic numeric check)
-            if (!teamIdInput.value.trim() || isNaN(teamIdInput.value)) {
-                alert('Please enter a valid team ID.');
-                return;
-            }
-
+           
             const playerObject = {
                 name: nameInput.value,
                 breed: breedInput.value,
+                status: selectedStatus, 
                 imageUrl: imageUrlInput.value,
-                teamId: Number(teamIdInput.value)
             };
 
             addNewPlayer(playerObject);
-            //init();
-
 
         });
 
