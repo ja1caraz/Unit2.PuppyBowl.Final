@@ -1,5 +1,5 @@
 # Unit2.PuppyBowl.Final
-Team6 - Marc Draft
+Team6
 Based on Calliope's email:
 
 You are working with the humane society to add a mini-game to their website
