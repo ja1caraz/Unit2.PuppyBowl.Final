@@ -23,6 +23,7 @@ let playerList = document.querySelector('#players');
  * @returns An array of objects.
  */
 
+//Clears the document
 const clearDOM = () => {
     document.body.innerHTML = '';
 
