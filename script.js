@@ -23,6 +23,7 @@ let playerList = document.querySelector('#players');
  * @returns An array of objects.
  */
 
+
 //Clears the document
 const clearDOM = () => {
     document.body.innerHTML = '';
@@ -180,6 +181,8 @@ const createPlayerCard = (player) => {
      <p>Created: ${simpleDate(createdPlayer)}</p>
      <p>Updated ${simpleDate(updatedPlayer)}</p>
      <p>Breed: ${player.breed}</p>
+     <p>Status: ${player.status}</p>
+
      <img src="${player.imageUrl}">
      </details>
      `;
@@ -250,6 +253,26 @@ const renderNewPlayerForm = async () => {
         breedInput.name = 'breed';
         form.appendChild(breedInput);
 
+
+        let statusLabel = document.createElement('label');
+        statusLabel.htmlFor = 'status';
+        statusLabel.textContent = 'Status:';
+        form.appendChild(statusLabel);
+
+        let statusSelect = document.createElement('select');
+        statusSelect.id = 'status';
+        statusSelect.name = 'status';
+        form.appendChild(statusSelect);
+
+        const statusOptions = ['field', 'bench'];
+
+        statusOptions.forEach((option) => {
+            let statusOption = document.createElement('option');
+            statusOption.value = option;
+            statusOption.textContent = option.charAt(0).toUpperCase() + option.slice(1); // Capitalize first letter
+            statusSelect.appendChild(statusOption);
+        });
+
         let imageUrlLabel = document.createElement('label');
         imageUrlLabel.htmlFor = 'imageUrl';
         imageUrlLabel.textContent = 'Image Url: ';
@@ -274,6 +297,9 @@ const renderNewPlayerForm = async () => {
             const breedInput = document.getElementById('breed');
             const imageUrlInput = document.getElementById('imageUrl');
 
+            const statusInput = document.getElementById('status');
+            const selectedStatus = statusInput.value;
+
             // Validate Name
             if (!nameInput.value.trim()) {
                 alert('Please enter a name.');
@@ -286,15 +312,25 @@ const renderNewPlayerForm = async () => {
                 return;
             }
 
+
+             // Validate Status
+             if (!statusOptions.includes(selectedStatus)) {
+                alert('Please select a valid status.');
+                return;
+            }
+
             // Validate Image URL (basic validation for URL format)
             if (!imageUrlInput.value.trim() || !imageUrlInput.value.startsWith('http')) {
                 alert('Please enter a valid image URL.');
                 return;
             }
 
+
+           
             const playerObject = {
                 name: nameInput.value,
                 breed: breedInput.value,
+                status: selectedStatus, 
                 imageUrl: imageUrlInput.value,
             };
 
