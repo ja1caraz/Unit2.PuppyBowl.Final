@@ -10,28 +10,25 @@ body {
   flex-direction: column;
 }
 #new-player-form {
-  background-color: #eef2ef;
+  background-color: #EEF2EF;
   position: fixed;
   height: 100%;
 }
-
 #playerForm {
   width: 14em;
   display: grid;
   align-items: flex-start;
 }
-
-#playerForm > label,input {
+#playerForm > label,input,select {
   width: 15em;
   margin: .25em;
 }
 button {
-  width: 5em;
+  width: 7em;
   margin: .15em;
 }
-
 ul {
-  margin-left: 220px;
+  margin-left: 235px;
   display: grid;
   grid-template-columns: repeat(2,1fr);
   list-style: none;
@@ -51,7 +48,6 @@ li > div {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-
 #span-details, #span-player {
   padding: 0;
   margin: 5px;
@@ -63,11 +59,8 @@ li > div {
   font-size: .8em;
   padding-bottom: 5px;
 }
-
 li img {
   width: 100%;
   max-width: 300px;
   max-height: 100%;
 }
-
-
