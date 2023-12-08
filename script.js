@@ -23,6 +23,8 @@ let playerList = document.querySelector('#players');
  * @returns An array of objects.
  */
 
+
+//Clears the document
 const clearDOM = () => {
     document.body.innerHTML = '';
 
@@ -180,6 +182,7 @@ const createPlayerCard = (player) => {
      <p>Updated ${simpleDate(updatedPlayer)}</p>
      <p>Breed: ${player.breed}</p>
      <p>Status: ${player.status}</p>
+
      <img src="${player.imageUrl}">
      </details>
      `;
@@ -250,6 +253,7 @@ const renderNewPlayerForm = async () => {
         breedInput.name = 'breed';
         form.appendChild(breedInput);
 
+
         let statusLabel = document.createElement('label');
         statusLabel.htmlFor = 'status';
         statusLabel.textContent = 'Status:';
@@ -268,7 +272,6 @@ const renderNewPlayerForm = async () => {
             statusOption.textContent = option.charAt(0).toUpperCase() + option.slice(1); // Capitalize first letter
             statusSelect.appendChild(statusOption);
         });
-
 
         let imageUrlLabel = document.createElement('label');
         imageUrlLabel.htmlFor = 'imageUrl';
@@ -293,6 +296,7 @@ const renderNewPlayerForm = async () => {
             const nameInput = document.getElementById('name');
             const breedInput = document.getElementById('breed');
             const imageUrlInput = document.getElementById('imageUrl');
+
             const statusInput = document.getElementById('status');
             const selectedStatus = statusInput.value;
 
@@ -308,18 +312,19 @@ const renderNewPlayerForm = async () => {
                 return;
             }
 
+
              // Validate Status
              if (!statusOptions.includes(selectedStatus)) {
                 alert('Please select a valid status.');
                 return;
             }
 
-
             // Validate Image URL (basic validation for URL format)
             if (!imageUrlInput.value.trim() || !imageUrlInput.value.startsWith('http')) {
                 alert('Please enter a valid image URL.');
                 return;
             }
+
 
            
             const playerObject = {
